@@ -19,7 +19,7 @@
 
 ## 🎯 The Problem
 
-As a male photographer trying to take photos for my girlfriend, I always struggled with posing guidance. I'm not a professional photographer, and I often wondered:
+As a man trying to take photos for my girlfriend in the pretty sight, I always struggled with posing guidance. I'm not a professional photographer, and I often wondered:
 
 > *"What if an AI could act like a professional photographer standing by my side, teaching me how to shoot?"*
 
