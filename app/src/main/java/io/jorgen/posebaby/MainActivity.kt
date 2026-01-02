@@ -94,6 +94,11 @@ fun PoseBabyApp(modifier: Modifier = Modifier, viewModel: MainViewModel = viewMo
     val displayCropRegion by viewModel.displayCropRegion.collectAsState()
     val isPoseMatched by viewModel.isPoseMatched.collectAsState()
     
+    // Settings state
+    val showSettingsDialog by viewModel.showSettingsDialog.collectAsState()
+    val zhipuApiKey by viewModel.zhipuApiKey.collectAsState()
+    val doubaoApiKey by viewModel.doubaoApiKey.collectAsState()
+    
     // Request camera permission
     LaunchedEffect(Unit) {
         if (!cameraPermissionState.status.isGranted) {
@@ -108,6 +113,23 @@ fun PoseBabyApp(modifier: Modifier = Modifier, viewModel: MainViewModel = viewMo
         if (isPoseMatched) {
             android.widget.Toast.makeText(context, "完美！保持住！", android.widget.Toast.LENGTH_SHORT).show()
         }
+    }
+    
+    if (showSettingsDialog) {
+        val hasValidKeys = zhipuApiKey.isNotBlank() && doubaoApiKey.isNotBlank()
+        
+        SettingsDialog(
+            initialZhipuKey = zhipuApiKey,
+            initialDoubaoKey = doubaoApiKey,
+            onDismiss = { 
+                if (hasValidKeys) {
+                    viewModel.closeSettings()
+                } else {
+                    android.widget.Toast.makeText(context, "请先配置 API Key 才能使用", android.widget.Toast.LENGTH_SHORT).show()
+                }
+            },
+            onSave = { z, d -> viewModel.saveApiKeys(z, d) }
+        )
     }
     
     if (!cameraPermissionState.status.isGranted) {
@@ -144,6 +166,7 @@ fun PoseBabyApp(modifier: Modifier = Modifier, viewModel: MainViewModel = viewMo
                     ModeSelectionScreen(
                         onTextModeSelected = { viewModel.selectMode(MainViewModel.Mode.TEXT_MODE) },
                         onImageModeSelected = { viewModel.selectMode(MainViewModel.Mode.IMAGE_MODE) },
+                        onSettingsClicked = { viewModel.openSettings() },
                         modifier = Modifier.fillMaxSize()
                     )
                 }
@@ -486,6 +509,7 @@ fun PoseBabyApp(modifier: Modifier = Modifier, viewModel: MainViewModel = viewMo
                     ModeSelectionScreen(
                         onTextModeSelected = { viewModel.selectMode(MainViewModel.Mode.TEXT_MODE) },
                         onImageModeSelected = { viewModel.selectMode(MainViewModel.Mode.IMAGE_MODE) },
+                        onSettingsClicked = { viewModel.openSettings() },
                         modifier = Modifier.fillMaxSize()
                     )
                 }

@@ -29,47 +29,72 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+
+import androidx.compose.foundation.layout.Box
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.IconButton
+
 @Composable
 fun ModeSelectionScreen(
     onTextModeSelected: () -> Unit,
     onImageModeSelected: () -> Unit,
+    onSettingsClicked: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Column(
+    Box(
         modifier = modifier
             .fillMaxSize()
             .background(Color.Black)
-            .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
     ) {
-        Text(
-            text = "PoseBaby",
-            style = MaterialTheme.typography.displayMedium,
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            modifier = Modifier.padding(bottom = 48.dp)
-        )
+        IconButton(
+            onClick = onSettingsClicked,
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(16.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Default.Settings,
+                contentDescription = "Settings",
+                tint = Color.White
+            )
+        }
 
-        ModeCard(
-            title = "文本模式 (Text Mode)",
-            description = "AI 分析场景并推荐姿势。屏幕上显示骨架引导，帮助你摆出完美造型。",
-            icon = Icons.Default.Person,
-            color = Color(0xFFE91E63),
-            onClick = onTextModeSelected
-        )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = "PoseBaby",
+                style = MaterialTheme.typography.displayMedium,
+                fontWeight = FontWeight.Bold,
+                color = Color.White,
+                modifier = Modifier.padding(bottom = 48.dp)
+            )
 
-        Spacer(modifier = Modifier.height(24.dp))
+            ModeCard(
+                title = "文本模式 (Text Mode)",
+                description = "AI 分析场景并推荐姿势。屏幕上显示骨架引导，帮助你摆出完美造型。",
+                icon = Icons.Default.Person,
+                color = Color(0xFFE91E63),
+                onClick = onTextModeSelected
+            )
 
-        ModeCard(
-            title = "图片模式 (Image Mode)",
-            description = "AI 生成真人参考图。可选择单图或九宫格，支持裁剪并在相机中半透明对比。",
-            icon = Icons.Default.Face,
-            color = Color(0xFF2196F3),
-            onClick = onImageModeSelected
-        )
+            Spacer(modifier = Modifier.height(24.dp))
+
+            ModeCard(
+                title = "图片模式 (Image Mode)",
+                description = "AI 生成真人参考图。可选择单图或九宫格，支持裁剪并在相机中半透明对比。",
+                icon = Icons.Default.Face,
+                color = Color(0xFF2196F3),
+                onClick = onImageModeSelected
+            )
+        }
     }
 }
+
 
 @Composable
 fun ModeCard(

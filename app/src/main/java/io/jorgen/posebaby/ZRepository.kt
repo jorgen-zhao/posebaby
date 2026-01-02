@@ -2,6 +2,7 @@ package io.jorgen.posebaby
 
 import android.graphics.Bitmap
 import android.util.Base64
+import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
@@ -19,7 +20,7 @@ import java.util.concurrent.TimeUnit
  * while implementing the actual network call using OkHttp to ensure reliability without
  * full documentation of the Zai SDK internal classes.
  */
-class ZRepository {
+class ZRepository(private val apiKey: String = BuildConfig.ZHIPU_API_KEY) {
 
     // Placeholder for the requested GenerativeModel class
     class GenerativeModel(val modelName: String, val apiKey: String) {
@@ -94,11 +95,16 @@ class ZRepository {
         }
     }
 
-    // Initialize using key from BuildConfig
+    // Initialize using key from constructor
     private val generativeModel = GenerativeModel(
         modelName = "glm-4.5v",
-        apiKey = BuildConfig.ZHIPU_API_KEY
+        apiKey = apiKey
     )
+    
+    init {
+        val maskedKey = if (apiKey.length > 8) "${apiKey.take(4)}...${apiKey.takeLast(4)}" else apiKey
+        android.util.Log.d("ZRepository", "Initialized with API Key: $maskedKey")
+    }
 
     // Removed duplicate data class PoseSuggestion
 
@@ -127,8 +133,15 @@ class ZRepository {
         
         return try {
             val response = generativeModel.generateContent(prompt, bitmap)
+            Log.d("ZRepository", "Raw API Response: $response")
+            
+            if (response.startsWith("Error:") || !response.trim().startsWith("{")) {
+                Log.e("ZRepository", "API returned non-JSON error: $response")
+                return emptyList()
+            }
+            
             val jsonObject = JSONObject(response)
-            val jsonArray = jsonObject.getJSONArray("suggestions")
+            val jsonArray = jsonObject.optJSONArray("suggestions") ?: return emptyList()
             val suggestions = mutableListOf<PoseSuggestion>()
             
             for (i in 0 until jsonArray.length()) {
@@ -146,7 +159,7 @@ class ZRepository {
             }
             suggestions
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e("ZRepository", "Failed to parse API response", e)
             emptyList()
         }
     }

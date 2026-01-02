@@ -10,7 +10,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MainViewModel : ViewModel() {
+
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+
+class MainViewModel(application: Application) : AndroidViewModel(application) {
+
+    private val apiKeyManager = ApiKeyManager(application)
 
     enum class Mode {
         TEXT_MODE,
@@ -47,9 +53,20 @@ class MainViewModel : ViewModel() {
         val totalParts: Int get() = rows * cols
     }
 
-    private val repository = ZRepository()
-    private val zhipuRepository = ZhipuRepository(BuildConfig.ZHIPU_API_KEY)
-    private val doubaoRepository = DoubaoRepository(BuildConfig.DOUBAO_API_KEY)
+    // Repositories are now mutable to support API key updates
+    private var repository = ZRepository()
+    private var zhipuRepository = ZhipuRepository(apiKeyManager.getZhipuKey())
+    private var doubaoRepository = DoubaoRepository(apiKeyManager.getDoubaoKey())
+    
+    // API Keys state
+    private val _zhipuApiKey = MutableStateFlow(apiKeyManager.getZhipuKey())
+    val zhipuApiKey: StateFlow<String> = _zhipuApiKey
+    
+    private val _doubaoApiKey = MutableStateFlow(apiKeyManager.getDoubaoKey())
+    val doubaoApiKey: StateFlow<String> = _doubaoApiKey
+    
+    private val _showSettingsDialog = MutableStateFlow(false)
+    val showSettingsDialog: StateFlow<Boolean> = _showSettingsDialog
 
     // App state management
     private val _appState = MutableStateFlow(AppState.MODE_SELECTION)
@@ -130,6 +147,43 @@ class MainViewModel : ViewModel() {
 
     private val _capturedImage = MutableStateFlow<Bitmap?>(null)
     val capturedImage: StateFlow<Bitmap?> = _capturedImage
+    
+    init {
+        if (!apiKeyManager.hasValidKeys()) {
+            _showSettingsDialog.value = true
+        }
+    }
+    
+    fun openSettings() {
+        _zhipuApiKey.value = apiKeyManager.getZhipuKey()
+        _doubaoApiKey.value = apiKeyManager.getDoubaoKey()
+        _showSettingsDialog.value = true
+    }
+    
+    fun closeSettings() {
+        _showSettingsDialog.value = false
+    }
+    
+    fun saveApiKeys(zhipuKey: String, doubaoKey: String) {
+        val trimmedZhipu = zhipuKey.trim()
+        val trimmedDoubao = doubaoKey.trim()
+        
+        Log.d("MainViewModel", "Saving API Keys. Zhipu: ${trimmedZhipu.take(6)}..., Doubao: ${trimmedDoubao.take(6)}...")
+        
+        apiKeyManager.setZhipuKey(trimmedZhipu)
+        apiKeyManager.setDoubaoKey(trimmedDoubao)
+        
+        // Update live state
+        _zhipuApiKey.value = trimmedZhipu
+        _doubaoApiKey.value = trimmedDoubao
+        
+        // Re-initialize repositories with new keys
+        zhipuRepository = ZhipuRepository(trimmedZhipu)
+        doubaoRepository = DoubaoRepository(trimmedDoubao)
+        repository = ZRepository(trimmedZhipu)
+        
+        _showSettingsDialog.value = false
+    }
 
     fun captureAndAnalyze(originalBitmap: Bitmap) {
         viewModelScope.launch {
@@ -190,6 +244,7 @@ class MainViewModel : ViewModel() {
             }
         }
     }
+
 
     /**
      * Extract scene description from suggestions for image generation.
