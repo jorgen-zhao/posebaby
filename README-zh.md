@@ -1,178 +1,177 @@
 # PoseBaby 📸
 
-> Your AI Photography Coach - Professional posing guidance powered by LLM
+> 您的 AI 摄影教练 - 由大语言模型驱动的专业摆姿指导
 
 <p align="center">
   <img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" alt="PoseBaby Logo" width="120"/>
 </p>
 
 <p align="center">
-  <a href="#features">Features</a> •
-  <a href="#demo">Demo</a> •
-  <a href="#architecture">Architecture</a> •
-  <a href="#tech-stack">Tech Stack</a> •
-  <a href="#getting-started">Getting Started</a> •
-  <a href="README-zh.md">中文说明</a>
+  <a href="#功能特性">功能特性</a> •
+  <a href="#演示">演示</a> •
+  <a href="#架构设计">架构设计</a> •
+  <a href="#技术栈">技术栈</a> •
+  <a href="#快速入门">快速入门</a>
 </p>
 
 ---
 
-## 🎯 The Problem
+## 🎯 痛点分析
 
-As a male photographer trying to take photos for my girlfriend, I always struggled with posing guidance. I'm not a professional photographer, and I often wondered:
+作为一个男性摄影师，在给女朋友拍照时，我总是很难给出有效的摆姿指导。我不是专业摄影师，所以我经常在想：
 
-> *"What if an AI could act like a professional photographer standing by my side, teaching me how to shoot?"*
+> *"如果有一个 AI 能像专业摄影师一样站在我身边，教我如何拍摄，那该多好？"*
 
-I searched for existing solutions but found none that truly addressed this need. So I decided to create one myself.
+我搜索了现有的解决方案，但没有发现能真正满足这个需求的应用。于是，我决定自己做一个。
 
-**PoseBaby** is an AI-powered photography assistant that analyzes your scene and provides real-time posing suggestions—like having a professional photographer coaching you through every shot.
+**PoseBaby** 是一款 AI 驱动的摄影助手。它能分析你的拍摄场景，并提供实时的摆姿建议——就像有一位专业摄影师在每一个镜头前为你提供指导。
 
-## ✨ Features
+## ✨ 功能特性
 
-### 🖼️ Image Mode (图片模式)
-- **Scene Analysis**: AI analyzes your photo's lighting, background, and mood
-- **Pose Suggestions**: Get 4 creative, scene-specific posing ideas
-- **Reference Generation**: Generate professional reference images using Doubao AI
-- **Grid Layouts**: Choose from 1×1, 1×2, 2×2, or 3×3 grid layouts
-- **Props Support**: Add photography props (flowers, books, umbrellas, etc.)
-- **Split Viewer**: View and select individual poses from generated grids
-- **Photo Capture**: Take photos directly from the overlay screen
+### 🖼️ 图片模式 (Image Mode)
+- **场景分析**：AI 分析照片的光线、背景和氛围。
+- **摆姿建议**：获得 4 个契合场景的创意摆姿想法。
+- **参考图生成**：使用豆包 AI 生成专业的参考图片。
+- **网格布局**：支持 1×1、1×2、2×2 或 3×3 的网格布局。
+- **道具支持**：添加摄影道具（花卉、书籍、雨伞等）。
+- **分割查看器**：查看并从生成的网格中选择单个姿势。
+- **实时拍照**：直接从叠加层界面采集照片。
 
-### 📝 Text Mode (文本模式)
-- **Skeleton Overlay**: Real-time pose skeleton guidance
-- **Pinch-to-Zoom**: Adjust skeleton reference size
-- **Pose Matching**: ML Kit pose detection for alignment
+### 📝 文本模式 (Text Mode)
+- **骨骼叠加**：实时的姿势骨骼引导。
+- **捏合缩放**：调节骨骼参考线的大小。
+- **姿势匹配**：使用 ML Kit 实现姿势检测与对齐。
 
-## 🎬 Demo
+## 🎬 演示
 
-> 🎥 **Demo Video Coming Soon**
+> 🎥 **演示视频即将上线 (Coming Soon)**
 
-## 🏗️ Architecture
+## 🏗️ 架构设计
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                         UI Layer                            │
+│                         UI 层                               │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐  │
-│  │ MainActivity│  │ Composables │  │  Overlay Screens    │  │
+│  │ MainActivity │  │ Composables │  │      叠加层界面     │  │
 │  └──────┬──────┘  └──────┬──────┘  └──────────┬──────────┘  │
 │         │                │                     │             │
 │         └────────────────┼─────────────────────┘             │
 │                          ▼                                   │
 │  ┌───────────────────────────────────────────────────────┐  │
 │  │                   MainViewModel                        │  │
-│  │    • State Management (AppState enum)                  │  │
-│  │    • Flow orchestration                                │  │
-│  │    • Prompt assembly                                   │  │
+│  │    • 状态管理 (AppState 枚举)                          │  │
+│  │    • 流程调度                                          │  │
+│  │    • 提示词组装                                        │  │
 │  └────────────────────────┬──────────────────────────────┘  │
 │                           │                                  │
 ├───────────────────────────┼──────────────────────────────────┤
-│                     Data Layer                               │
+│                         数据层                              │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────────┐   │
 │  │ ZRepository  │  │DoubaoRepo    │  │ ZhipuRepository  │   │
-│  │ (Scene AI)   │  │(Image Gen)   │  │ (Alternative)    │   │
+│  │ (场景 AI)    │  │(图像生)      │  │ (备用仓库)       │   │
 │  └──────┬───────┘  └──────┬───────┘  └────────┬─────────┘   │
 │         │                 │                    │             │
 │         ▼                 ▼                    ▼             │
 │  ┌─────────────────────────────────────────────────────────┐│
-│  │                    External APIs                         ││
-│  │   • Zhipu AI (GLM-4.5v) - Scene Analysis                ││
-│  │   • Doubao (Volcano Engine) - Image Generation          ││
+│  │                    外部 API                              ││
+│  │   • 智谱 AI (GLM-4.5v) - 场景分析                        ││
+│  │   • 豆包 (火山引擎) - 图像生成                           ││
 │  └─────────────────────────────────────────────────────────┘│
 │                                                              │
 │  ┌─────────────────────────────────────────────────────────┐│
 │  │                    ML Kit                                ││
-│  │   • Pose Detection - Skeleton overlay                   ││
+│  │   • 姿态检测 - 骨骼叠加                                  ││
 │  └─────────────────────────────────────────────────────────┘│
 └──────────────────────────────────────────────────────────────┘
 ```
 
-### App Flow
+### 应用流程
 
 ```
-Mode Selection → Source Selection → Camera/Gallery
+模式选择 → 来源选择 → 相机/相册
        │
        ▼
-   Analyzing (AI)
+   场景分析 (AI)
        │
        ▼
-  Pose Selection (4 suggestions)
+  姿势选择 (4 个建议)
        │
-       ├── Text Mode ──→ Skeleton Overlay ──→ Photo Capture
+       ├── 文本模式 ──→ 骨骼叠加 ──→ 拍照采集
        │
-       └── Image Mode ──→ Grid Selection ──→ Props Selection
+       └── 图片模式 ──→ 网格选择 ──→ 道具选择
                                 │
                                 ▼
-                         Image Generation (Doubao)
+                         图像生成 (豆包)
                                 │
                                 ▼
-                         Split Viewer (select pose)
+                         分割查看器 (选择姿势)
                                 │
                                 ▼
-                         Reference Overlay ──→ Photo Capture
+                         参考图叠加 ──→ 拍照采集
 ```
 
-## 🛠️ Tech Stack
+## 🛠️ 技术栈
 
-| Category | Technology |
+| 类别 | 技术 |
 |----------|------------|
-| **Language** | Kotlin |
-| **UI Framework** | Jetpack Compose |
-| **Architecture** | MVVM with StateFlow |
-| **Camera** | CameraX |
-| **ML** | Google ML Kit (Pose Detection) |
-| **Networking** | OkHttp |
-| **Image Loading** | Coil |
-| **AI - Scene Analysis** | Zhipu AI (GLM-4.5v) |
-| **AI - Image Generation** | Doubao (Volcano Engine) |
-| **Min SDK** | 24 (Android 7.0) |
-| **Target SDK** | 35 |
+| **开发语言** | Kotlin |
+| **UI 框架** | Jetpack Compose |
+| **架构模式** | MVVM (配合 StateFlow) |
+| **相机框架** | CameraX |
+| **机器学习** | Google ML Kit (Pose Detection) |
+| **网络请求** | OkHttp |
+| **图片加载** | Coil |
+| **AI - 场景分析** | 智谱 AI (GLM-4.5v) |
+| **AI - 图像生成** | 豆包 (火山引擎) |
+| **最低支持 SDK** | 24 (Android 7.0) |
+| **编译目标 SDK** | 35 |
 
-## 🚀 Getting Started
+## 🚀 快速入门
 
-### Prerequisites
+### 环境需求
 
-- Android Studio Hedgehog (2023.1.1) or later
+- Android Studio Hedgehog (2023.1.1) 或更高版本
 - JDK 11+
-- Android device/emulator with API 24+
+- Android 7.0+ (API 24+) 的真机或模拟器
 
-### API Keys Setup
+### API 密钥配置
 
-This app requires API keys from:
-1. **Zhipu AI** (智谱AI) - For scene analysis
-2. **Doubao** (豆包/Volcano Engine) - For image generation
+本应用需要以下平台的 API 密钥：
+1. **智谱 AI** (BigModel) - 用于场景分析
+2. **豆包** (火山引擎) - 用于参考图生成
 
-### Installation
+### 安装步骤
 
-1. **Clone the repository**
+1. **克隆仓库**
    ```bash
    git clone https://github.com/jorgen-zhao/posebaby.git
    cd posebaby
    ```
 
-2. **Configure API Keys**
+2. **配置密钥**
    
-   Create or edit `local.properties` in the project root:
+   在项目根目录下创建或编辑 `local.properties` 文件：
    ```properties
-   # Android SDK path (auto-generated)
+   # Android SDK 路径 (通常由 IDE 自动生成)
    sdk.dir=/path/to/android/sdk
    
-   # API Keys (required)
-   ZHIPU_API_KEY=your_zhipu_api_key_here
-   DOUBAO_API_KEY=your_doubao_api_key_here
+   # API 密钥 (必填)
+   ZHIPU_API_KEY=您的智谱AI密钥
+   DOUBAO_API_KEY=您的豆包API密钥
    ```
 
-3. **Build and Run**
+3. **构建与运行**
    ```bash
    ./gradlew assembleDebug
    ```
-   Or open in Android Studio and click Run.
+   或者直接在 Android Studio 中点击运行按钮。
 
-### Getting API Keys
+### 获取 API 密钥
 
-- **Zhipu AI**: Register at [open.bigmodel.cn](https://open.bigmodel.cn/)
-- **Doubao**: Register at [volcengine.com](https://www.volcengine.com/)
+- **智谱 AI**：在 [open.bigmodel.cn](https://open.bigmodel.cn/) 注册申请。
+- **豆包**：在 [volcengine.com](https://www.volcengine.com/) 注册申请。
 
-## 📄 License
+## 📄 开源协议
 
 ```
 Copyright 2025 Jorgen Zhao
