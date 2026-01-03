@@ -12,7 +12,7 @@
   <a href="#architecture">Architecture</a> •
   <a href="#tech-stack">Tech Stack</a> •
   <a href="#getting-started">Getting Started</a> •
-  <a href="README-zh.md">中文说明</a>
+  <a href="README.zh-CN.md">中文说明</a>
 </p>
 
 ---
@@ -44,7 +44,6 @@ I searched for existing solutions but found none that truly addressed this need.
 - **Pose Matching**: ML Kit pose detection for alignment
 
 ## 🎬 Demo
-
 
 
 ### 📸 Screenshots
