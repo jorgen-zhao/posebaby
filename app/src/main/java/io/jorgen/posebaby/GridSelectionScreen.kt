@@ -15,7 +15,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,82 +44,83 @@ fun GridSelectionScreen(
 ) {
     var selectedOption by remember { mutableStateOf<MainViewModel.GridOption?>(null) }
     
-    Column(
+    Box(
         modifier = modifier
             .fillMaxSize()
             .background(Color.Black)
-            .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+            .padding(24.dp)
     ) {
-        Text(
-            text = "选择图片布局",
-            style = MaterialTheme.typography.headlineMedium,
-            color = Color.White
-        )
-        
-        Spacer(modifier = Modifier.height(8.dp))
-        
-        Text(
-            text = "生成多个不同姿势的参考图",
-            style = MaterialTheme.typography.bodyMedium,
-            color = Color.White.copy(alpha = 0.7f)
-        )
-        
-        Spacer(modifier = Modifier.height(32.dp))
-        
-        // Grid options in 2x2 layout
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
+        // Back Button
+        IconButton(
+            onClick = onBack,
+            modifier = Modifier.align(Alignment.TopStart)
         ) {
-            GridOptionCard(
-                option = MainViewModel.GridOption.SINGLE,
-                isSelected = selectedOption == MainViewModel.GridOption.SINGLE,
-                onClick = { selectedOption = MainViewModel.GridOption.SINGLE }
-            )
-            GridOptionCard(
-                option = MainViewModel.GridOption.HORIZONTAL_2,
-                isSelected = selectedOption == MainViewModel.GridOption.HORIZONTAL_2,
-                onClick = { selectedOption = MainViewModel.GridOption.HORIZONTAL_2 }
-            )
+            Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
         }
-        
-        Spacer(modifier = Modifier.height(16.dp))
-        
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
+
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            GridOptionCard(
-                option = MainViewModel.GridOption.GRID_4,
-                isSelected = selectedOption == MainViewModel.GridOption.GRID_4,
-                onClick = { selectedOption = MainViewModel.GridOption.GRID_4 }
+            Text(
+                text = "选择图片布局",
+                style = MaterialTheme.typography.headlineMedium,
+                color = Color.White
             )
-            GridOptionCard(
-                option = MainViewModel.GridOption.GRID_9,
-                isSelected = selectedOption == MainViewModel.GridOption.GRID_9,
-                onClick = { selectedOption = MainViewModel.GridOption.GRID_9 }
+            
+            Spacer(modifier = Modifier.height(8.dp))
+            
+            Text(
+                text = "生成多个不同姿势的参考图",
+                style = MaterialTheme.typography.bodyMedium,
+                color = Color.White.copy(alpha = 0.7f)
             )
-        }
-        
-        Spacer(modifier = Modifier.height(32.dp))
-        
-        // Action buttons
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            Button(
-                onClick = onBack,
-                modifier = Modifier.weight(1f)
+            
+            Spacer(modifier = Modifier.height(32.dp))
+            
+            // Grid options in 2x2 layout
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Text("返回")
+                GridOptionCard(
+                    option = MainViewModel.GridOption.SINGLE,
+                    isSelected = selectedOption == MainViewModel.GridOption.SINGLE,
+                    onClick = { selectedOption = MainViewModel.GridOption.SINGLE }
+                )
+                GridOptionCard(
+                    option = MainViewModel.GridOption.HORIZONTAL_2,
+                    isSelected = selectedOption == MainViewModel.GridOption.HORIZONTAL_2,
+                    onClick = { selectedOption = MainViewModel.GridOption.HORIZONTAL_2 }
+                )
             }
             
+            Spacer(modifier = Modifier.height(16.dp))
+            
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                GridOptionCard(
+                    option = MainViewModel.GridOption.GRID_4,
+                    isSelected = selectedOption == MainViewModel.GridOption.GRID_4,
+                    onClick = { selectedOption = MainViewModel.GridOption.GRID_4 }
+                )
+                GridOptionCard(
+                    option = MainViewModel.GridOption.GRID_9,
+                    isSelected = selectedOption == MainViewModel.GridOption.GRID_9,
+                    onClick = { selectedOption = MainViewModel.GridOption.GRID_9 }
+                )
+            }
+            
+            Spacer(modifier = Modifier.height(32.dp))
+            
+            // Action button (Confirm only)
             Button(
                 onClick = { selectedOption?.let { onGridSelected(it) } },
                 enabled = selectedOption != null,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.fillMaxWidth()
             ) {
                 Text("确认生成")
             }

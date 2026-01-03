@@ -121,7 +121,7 @@ class ZRepository(private val apiKey: String = BuildConfig.ZHIPU_API_KEY) {
               "suggestions": [
                 {
                   "id": 1,
-                  "title": "靠墙慵懒风 (Lazy Leaning)",
+                  "title": "靠墙慵懒风",
                   "description": "让模特背靠左边的红砖墙，右腿微曲，眼神看向右下方。",
                   "photographer_tip": "使用大光圈虚化背景，对焦在眼睛。",
                   "technical_category": "leaning_left",

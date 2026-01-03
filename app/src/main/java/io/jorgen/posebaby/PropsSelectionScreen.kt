@@ -69,9 +69,9 @@ fun PropsSelectionScreen(
     var customPropText by remember { mutableStateOf("") }
     
     val commonProps = listOf(
-        "鲜花 (Flowers)", "书本 (Book)", "雨伞 (Umbrella)", 
-        "扇子 (Fan)", "吉他 (Guitar)", "咖啡 (Coffee)",
-        "帽子 (Hat)", "气球 (Balloons)", "椅子 (Chair)"
+        "鲜花", "书本", "雨伞", 
+        "扇子", "吉他", "咖啡",
+        "帽子", "气球", "椅子"
     )
     
     val selectedProps = remember { mutableStateListOf<String>() }
@@ -92,7 +92,7 @@ fun PropsSelectionScreen(
                 Icon(androidx.compose.material.icons.Icons.Default.ArrowBack, contentDescription = "Back", modifier = Modifier.size(24.dp), tint = Color.White)
             }
             Text(
-                "添加道具 (Add Props)",
+                "添加道具",
                 style = MaterialTheme.typography.headlineSmall,
                 color = Color.White,
                 fontWeight = FontWeight.Bold,
@@ -101,7 +101,7 @@ fun PropsSelectionScreen(
         }
         
         // Common Props Selection
-        Text("常用道具 (Common Items)", color = Color.Gray, modifier = Modifier.padding(bottom = 8.dp))
+        Text("常用道具", color = Color.Gray, modifier = Modifier.padding(bottom = 8.dp))
         FlowRow(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -134,11 +134,11 @@ fun PropsSelectionScreen(
         Spacer(modifier = Modifier.height(24.dp))
         
         // Custom Text Prop
-        Text("自定义道具 (Custom Text)", color = Color.Gray, modifier = Modifier.padding(bottom = 8.dp))
+        Text("自定义道具", color = Color.Gray, modifier = Modifier.padding(bottom = 8.dp))
         OutlinedTextField(
             value = customPropText,
             onValueChange = { customPropText = it },
-            placeholder = { Text("例如：红色围巾 (e.g., Red Scarf)", color = Color.Gray) },
+            placeholder = { Text("例如：红色围巾", color = Color.Gray) },
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = Color(0xFFE91E63),
@@ -162,7 +162,7 @@ fun PropsSelectionScreen(
             modifier = Modifier.fillMaxWidth().height(56.dp),
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE91E63))
         ) {
-            Text("生成图片 (Generate)", style = MaterialTheme.typography.titleMedium)
+            Text("生成图片", style = MaterialTheme.typography.titleMedium)
         }
     }
 }

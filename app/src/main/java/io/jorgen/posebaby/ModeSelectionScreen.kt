@@ -75,7 +75,7 @@ fun ModeSelectionScreen(
             )
 
             ModeCard(
-                title = "文本模式 (Text Mode)",
+                title = "文本模式",
                 description = "AI 分析场景并推荐姿势。屏幕上显示骨架引导，帮助你摆出完美造型。",
                 icon = Icons.Default.Person,
                 color = Color(0xFFE91E63),
@@ -85,7 +85,7 @@ fun ModeSelectionScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             ModeCard(
-                title = "图片模式 (Image Mode)",
+                title = "图片模式",
                 description = "AI 生成真人参考图。可选择单图或九宫格，支持裁剪并在相机中半透明对比。",
                 icon = Icons.Default.Face,
                 color = Color(0xFF2196F3),

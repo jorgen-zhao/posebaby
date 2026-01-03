@@ -55,14 +55,14 @@ fun PhotoPreviewScreen(
                 onClick = onRetake,
                 colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White)
             ) {
-                Text("重拍 (Retake)")
+                Text("重拍")
             }
             
             Button(
                 onClick = onSave,
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE91E63))
             ) {
-                Text("保存 (Save)")
+                Text("保存")
             }
         }
     }

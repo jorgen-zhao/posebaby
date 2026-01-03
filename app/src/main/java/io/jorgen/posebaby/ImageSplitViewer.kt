@@ -17,6 +17,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -121,19 +124,7 @@ fun ImageSplitViewer(
             }
         }
         
-        // Close button
-        Box(
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(16.dp)
-                .size(40.dp)
-                .clip(CircleShape)
-                .background(Color.Black.copy(alpha = 0.5f))
-                .clickable { onClose() },
-            contentAlignment = Alignment.Center
-        ) {
-            Text("✕", color = Color.White, style = MaterialTheme.typography.titleMedium)
-        }
+
     }
 }
 
@@ -230,6 +221,14 @@ private fun AutoSplitView(
             }
         }
         
+        // Back Button
+        IconButton(
+             onClick = onBack,
+             modifier = Modifier.align(Alignment.TopStart).padding(16.dp)
+        ) {
+             Icon(androidx.compose.material.icons.Icons.Default.ArrowBack, "Back", tint = Color.White)
+        }
+
         // Top: Label
         Column(
             modifier = Modifier
@@ -409,6 +408,14 @@ private fun ManualSplitView(
             }
         }
         
+        // Back Button
+        IconButton(
+             onClick = onBack,
+             modifier = Modifier.align(Alignment.TopStart).padding(16.dp)
+        ) {
+             Icon(androidx.compose.material.icons.Icons.Default.ArrowBack, "Back", tint = Color.White)
+        }
+
         // Top
         Column(
             modifier = Modifier.align(Alignment.TopCenter).padding(top = 48.dp),
@@ -421,11 +428,8 @@ private fun ManualSplitView(
         // Bottom
         Row(
             modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 32.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+            horizontalArrangement = Arrangement.Center
         ) {
-            Button(onClick = onBack, colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF424242))) {
-                Text("← 返回")
-            }
             Button(onClick = { onCropConfirmed(CropRegion(cropLeft, cropTop, cropRight, cropBottom)) }) {
                 Text("预览裁剪")
             }
@@ -488,6 +492,14 @@ private fun CropPreviewView(
             )
         }
         
+        // Back Button
+        IconButton(
+             onClick = onBack,
+             modifier = Modifier.align(Alignment.TopStart).padding(16.dp)
+        ) {
+             Icon(androidx.compose.material.icons.Icons.Default.ArrowBack, "Back", tint = Color.White)
+        }
+
         // Top
         Column(
             modifier = Modifier.align(Alignment.TopCenter).padding(top = 48.dp),
@@ -500,11 +512,8 @@ private fun CropPreviewView(
         // Bottom
         Row(
             modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 32.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
+            horizontalArrangement = Arrangement.Center
         ) {
-            Button(onClick = onBack, colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF424242))) {
-                Text("← 返回调整")
-            }
             Button(onClick = onConfirm) {
                 Text("确认选择")
             }

@@ -257,7 +257,7 @@ fun PoseBabyApp(modifier: Modifier = Modifier, viewModel: MainViewModel = viewMo
                             )
                             Spacer(modifier = Modifier.height(24.dp))
                             Button(onClick = { viewModel.goBackToSourceSelection() }) {
-                                Text("重试 (Retry)")
+                                Text("重试")
                             }
                         }
                     }
@@ -392,26 +392,14 @@ fun PoseBabyApp(modifier: Modifier = Modifier, viewModel: MainViewModel = viewMo
                         }
                     }
                     
-                    // Floating buttons
-                    Row(
-                        modifier = Modifier
-                            .align(Alignment.CenterEnd)
-                            .padding(end = 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+
+                    
+                    // Back Button (Top Left)
+                    IconButton(
+                        onClick = { viewModel.goBackToSourceSelection() },
+                        modifier = Modifier.align(Alignment.TopStart).padding(16.dp)
                     ) {
-                        IconButton(onClick = { viewModel.goBackToSourceSelection() }) {
-                            Icon(Icons.Default.ArrowBack, "返回", tint = Color.White)
-                        }
-                        IconButton(
-                            onClick = {
-                                scope.launch {
-                                    val bitmap = cameraManager.takePicture()
-                                    if (bitmap != null) viewModel.captureAndAnalyze(bitmap)
-                                }
-                            }
-                        ) {
-                            Icon(Icons.Default.Refresh, "重新分析", tint = Color.White)
-                        }
+                        Icon(Icons.Default.ArrowBack, "返回", tint = Color.White)
                     }
                 }
                 
@@ -481,26 +469,14 @@ fun PoseBabyApp(modifier: Modifier = Modifier, viewModel: MainViewModel = viewMo
                         }
                     }
                     
-                    // Floating buttons
-                    Row(
-                        modifier = Modifier
-                            .align(Alignment.CenterEnd)
-                            .padding(end = 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+
+                    
+                    // Back Button (Top Left)
+                    IconButton(
+                        onClick = { viewModel.backToImageViewer() },
+                        modifier = Modifier.align(Alignment.TopStart).padding(16.dp)
                     ) {
-                        IconButton(onClick = { viewModel.backToImageViewer() }) {
-                            Icon(Icons.Default.ArrowBack, "返回选择", tint = Color.White)
-                        }
-                        IconButton(
-                            onClick = {
-                                scope.launch {
-                                    val bitmap = cameraManager.takePicture()
-                                    if (bitmap != null) viewModel.captureAndAnalyze(bitmap)
-                                }
-                            }
-                        ) {
-                            Icon(Icons.Default.Refresh, "重新分析", tint = Color.White)
-                        }
+                        Icon(Icons.Default.ArrowBack, "返回选择", tint = Color.White)
                     }
                 }
                 
