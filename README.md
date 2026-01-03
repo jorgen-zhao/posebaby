@@ -45,7 +45,24 @@ I searched for existing solutions but found none that truly addressed this need.
 
 ## 🎬 Demo
 
-> 🎥 **Demo Video Coming Soon**
+<video src="demo/demo.mp4" controls="controls" style="max-width: 100%;"></video>
+
+### 📸 Screenshots
+
+<p align="center">
+  <img src="demo/1.jpg" width="19%" />
+  <img src="demo/2.jpg" width="19%" />
+  <img src="demo/3.jpg" width="19%" />
+  <img src="demo/4.jpg" width="19%" />
+  <img src="demo/5.jpg" width="19%" />
+</p>
+<p align="center">
+  <img src="demo/6.jpg" width="19%" />
+  <img src="demo/7.jpg" width="19%" />
+  <img src="demo/8.jpg" width="19%" />
+  <img src="demo/9.jpg" width="19%" />
+  <img src="demo/10.jpg" width="19%" />
+</p>
 
 ## 🏗️ Architecture
 
