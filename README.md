@@ -45,7 +45,8 @@ I searched for existing solutions but found none that truly addressed this need.
 
 ## 🎬 Demo
 
-<video src="demo/demo.mp4" controls="controls" style="max-width: 100%;"></video>
+[![Demo Video](demo/1.jpg)](demo/demo.mp4)
+> *Click the image above to view the demo video*
 
 ### 📸 Screenshots
 

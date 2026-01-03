@@ -44,7 +44,8 @@
 
 ## 🎬 演示
 
-<video src="demo/demo.mp4" controls="controls" style="max-width: 100%;"></video>
+[![演示视频](demo/1.jpg)](demo/demo.mp4)
+> *点击上方图片查看演示视频*
 
 ### 📸 应用截图
 
